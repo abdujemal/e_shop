@@ -1,16 +1,11 @@
-import 'package:e_shop/View/screens/main.dart';
-import 'package:e_shop/View/screens/search_page.dart';
 import 'package:e_shop/View/screens/splash.dart';
 import 'package:e_shop/constants.dart';
-import 'package:e_shop/View/controller/bindings.dart';
 import 'package:e_shop/injection.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
-
-import 'View/controller/MainController.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +37,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           canvasColor: Colors.white,
           scaffoldBackgroundColor: bgColor,
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.orange,
           fontFamily: "Gordita",
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.transparent,

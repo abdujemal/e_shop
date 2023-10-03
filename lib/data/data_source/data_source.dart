@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/data/models/address_model.dart';
 import 'package:e_shop/data/models/order_model.dart';
 import 'package:e_shop/data/models/product_model.dart';
-import 'package:e_shop/data/models/transaction_model.dart';
 import 'package:e_shop/data/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -103,7 +102,7 @@ class DataSourceImpl extends DataSource {
     await firebaseAuth.signOut();
     if (isGoogle) {
       googleSignIn.signOut();
-    }else if(isFacebook){
+    } else if (isFacebook) {
       facebookAuth.logOut();
     }
 
@@ -128,16 +127,18 @@ class DataSourceImpl extends DataSource {
 
     UploadTask userTask = userRef.putFile(file);
 
-    String userImage = await userTask.storage.ref().getDownloadURL();
+    String userImage =
+        await (await userTask.whenComplete(() => null)).ref.getDownloadURL();
 
     UserModel userModel = UserModel(
-        name: name,
-        email: email,
-        location: location,
-        zipCode: zipCode,
-        phoneNumber: phone,
-        id: uid,
-        img: userImage);
+      name: name,
+      email: email,
+      location: location,
+      zipCode: zipCode,
+      phoneNumber: phone,
+      id: uid,
+      img: userImage,
+    );
 
     await firebaseFirestore
         .collection("users")
@@ -282,7 +283,12 @@ class DataSourceImpl extends DataSource {
 
   @override
   Future<List<MyOrder>> getOrders() async {
-    final orderQs = await firebaseFirestore.collection("orders").get();
+    String uid = firebaseAuth.currentUser!.uid;
+
+    final orderQs = await firebaseFirestore
+        .collection("orders")
+        .where('uid', isEqualTo: uid)
+        .get();
 
     List<MyOrder> orders = [];
 

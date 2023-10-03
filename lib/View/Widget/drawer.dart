@@ -25,45 +25,51 @@ class _MyDrawerState extends State<MyDrawer> {
 
   appBar() {
     return GetBuilder<LoginSignUpController>(builder: (controller) {
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            backgroundImage: controller.currentUser.value.img.isEmpty
-                ? null
-                : NetworkImage(controller.currentUser.value.img),
-            radius: 30,
-            child: controller.currentUser.value.img.isEmpty
-                ? const Icon(Icons.person)
-                : null,
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(controller.currentUser.value.name,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20)),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                "Fashion Designer",
-                style: TextStyle(fontSize: 12),
-              ),
-            ],
-          ),
-          const Spacer(),
-          const Icon(
-            Icons.keyboard_arrow_right,
-            size: 45,
-          )
-        ],
-      );
+      return LayoutBuilder(builder: (context, ct) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              backgroundImage: controller.currentUser.value.img.isEmpty
+                  ? null
+                  : NetworkImage(controller.currentUser.value.img),
+              radius: 30,
+              child: controller.currentUser.value.img.isEmpty
+                  ? const Icon(Icons.person)
+                  : null,
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: ct.maxWidth - 130,
+                  child: Text(controller.currentUser.value.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20)),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Flutter developer",
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+            const Spacer(),
+            const Icon(
+              Icons.keyboard_arrow_right,
+              size: 45,
+            )
+          ],
+        );
+      });
     });
   }
 

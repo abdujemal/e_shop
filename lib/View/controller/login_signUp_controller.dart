@@ -179,6 +179,7 @@ class LoginSignUpController extends GetxController {
     res.fold((l) {
       emailSignUpState.value = RequestState.error;
       toast(l.toString(), ToastType.error);
+      print(l.toString());
       update();
     }, (r) {
       emailSignUpState.value = RequestState.loaded;

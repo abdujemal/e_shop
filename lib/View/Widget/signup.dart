@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:e_shop/View/Widget/custom_button.dart';
 import 'package:e_shop/View/Widget/input_layout.dart';
 import 'package:e_shop/View/Widget/social_icon.dart';
 import 'package:e_shop/View/controller/login_signUp_controller.dart';
-import 'package:e_shop/View/screens/LoginSignUp.dart';
 import 'package:e_shop/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -195,6 +192,8 @@ class _SignUpState extends State<SignUp> {
                 onTap: () {
                   if (formKey.currentState!.validate()) {
                     if (controller.registerImg.value.path == "") {
+                      toast("Please choose your image.", ToastType.error);
+                    } else {
                       controller.signUpWithEmailnPassword(
                           emailTc.text,
                           passwordTc.text,
@@ -203,8 +202,6 @@ class _SignUpState extends State<SignUp> {
                           locationTc.text,
                           zipCodeTc.text,
                           controller.registerImg.value);
-                    } else {
-                      toast("Please choose your image.", ToastType.error);
                     }
                   }
                 });
